@@ -1,10 +1,13 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URL:http://user:muxieureka@localhost:5000}/eureka/
+      defaultZone: ${EUREKA_URL:http://user:password@localhost:5000}/eureka/
 security:
   user:
     password: ${eureka.password}
+
+server:
+  port: 80
 
 ---
 spring:
@@ -13,4 +16,4 @@ eureka:
   instance:
     hostname: ${DOMAIN_NAME}
     nonSecurePort: 80
-  password: ${USER_PASSWORD:muxieureka}
+  password: ${USER_PASSWORD:password}
