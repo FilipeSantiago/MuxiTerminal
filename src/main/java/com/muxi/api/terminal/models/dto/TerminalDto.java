@@ -1,22 +1,11 @@
-package com.muxi.api.terminal.models.entities;
+package com.muxi.api.terminal.models.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+public class TerminalDto extends AbstractDto {
 
-@Entity
-public class Terminal extends AbstractEntity {
-	
-    @Id
 	private int logic;
-    
-    @Column(nullable = false)
     private String serial;
-	@Column(nullable = false)
 	private String model;
-	@Column(nullable = false)
 	private String version;
-	
 	private int sam;
 	private String ptId;	
 	private Integer plat;
@@ -24,7 +13,22 @@ public class Terminal extends AbstractEntity {
 	private Integer mxf;
 	private String verFm;
 	
-	public Terminal() { }
+	public TerminalDto() { }
+
+	public TerminalDto(String terminalStr) throws Exception {
+		String[] terminalArray = terminalStr.split(";");
+		
+		setLogic(terminalArray[0]);
+		setSerial(terminalArray[1]);
+		setModel(terminalArray[2]);
+		setSam(terminalArray[3]);
+		setPtId(terminalArray[4]);
+		setPlat(terminalArray[5]);
+		setVersion(terminalArray[6]);
+		setMxr(terminalArray[7]);
+		setMxf(terminalArray[8]);
+		setVerFm(terminalArray[9]);		
+	}
 	
 	public void setPtId(String ptId) {
 		this.ptId = ptId;
@@ -73,6 +77,43 @@ public class Terminal extends AbstractEntity {
 	public void setMxf(int mxf) {
 		this.mxf = mxf;
 	}
+	
+	//Special Setters - String to Int
+	
+	public void setLogic(String logic) throws Exception {
+		this.logic = Integer.parseInt(logic);
+	}
+	
+	public void setSam(String sam) throws Exception {
+		int potentialSam = Integer.parseInt(sam);
+		if(potentialSam < 0)
+			throw new IllegalArgumentException("Sam must be equal or greater than 0");
+		
+		this.sam = potentialSam;
+	}
+	
+	public void setPlat(String plat) throws Exception {
+		if(plat == null)
+			this.plat = null;
+		else
+			this.plat = Integer.parseInt(plat);
+	}
+	
+	public void setMxr(String mxr) throws Exception {
+		if(mxr == null)
+			this.mxr = null;
+		else
+			this.mxr = Integer.parseInt(mxr);
+	}
+	
+	public void setMxf(String mxf) throws Exception {
+		if(mxf == null)
+			this.mxf = null;
+		else
+			this.mxf = Integer.parseInt(mxf);
+	}
+	
+	// End Special Setters
 	
 	public int getLogic() {
 		return logic;
